@@ -1,0 +1,16 @@
+{
+  "product": [
+    {
+      "name": "pink fantasy",
+      "image": "meth2upscale.png",
+      "price": 500,
+      "id": 1
+    },
+    {
+      "name": "pink fantasy",
+      "image": "meth1.png",
+      "price": 400,
+      "id": 2
+    }
+  ]
+}
