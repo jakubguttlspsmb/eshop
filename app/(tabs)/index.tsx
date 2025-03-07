@@ -15,8 +15,14 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 export default function HomeScreen() {
   const { width, height } = Dimensions.get("window");
   const [meth, setMeth] = useState();
+  const [show, setShow] = useState(Boolean);
 
-  const ToExersise = () => {};
+  const Add = () => {
+    setShow(true)
+  };
+  const NoAdd = () => {
+    setShow(false)
+  };
 
   useEffect(() => {
     const data = require('@/assets/data/products.json'); 
@@ -29,7 +35,10 @@ export default function HomeScreen() {
 
   const imageMap: ImageMap = {
     meth2upscale: require("@/assets/images/meth2upscale.png"),
-    meth1: require("@/assets/images/meth1.png"),
+    meth1upscale: require("@/assets/images/meth1upscale.png"),
+    meth3upscale: require("@/assets/images/meth3upscale.png"),
+    meth4upscale: require("@/assets/images/meth4upscale.png"),
+    meth5upscale: require("@/assets/images/meth5upscale.png"),
   };
   
 
@@ -39,7 +48,7 @@ export default function HomeScreen() {
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require("@/assets/images/meth2upscale.png")}
+          source={require("@/assets/images/meth1upscale.png")}
           style={styles.reactLogo}
         />
       }
@@ -54,12 +63,14 @@ export default function HomeScreen() {
           numColumns={2}
           data={meth}
           renderItem={({ item }) => (
-            <Pressable onPress={() => ToExersise()} style={styles.boxes}>
+            <Pressable onHoverIn={() => Add()} onHoverOut={() => NoAdd()} style={styles.boxes}>
               <ImageBackground
                 style={styles.backgroudImages}
                 source={imageMap[item.image.split('.')[0]]}
               >
-                <Text style={styles.mediumText}>{`${item.name}, @/assets/images/${item.image}`}</Text>
+                <Text style={styles.mediumText}>{`${item.name}`}</Text>
+                <Text style={styles.mediumText}>{`${item.price}kč/g`}</Text>
+                if(show = true)
               </ImageBackground>
             </Pressable>
           )}
@@ -87,7 +98,7 @@ const styles = StyleSheet.create({
   mediumText: {
     fontSize: 20,
     textAlign: "center",
-    color: "white",
+    color: "black",
   },
   container: {
     alignItems: "center",

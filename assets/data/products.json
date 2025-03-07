@@ -3,14 +3,26 @@
     {
       "name": "pink fantasy",
       "image": "meth2upscale.png",
-      "price": 500,
+      "price": 499,
       "id": 1
     },
     {
-      "name": "pink fantasy",
-      "image": "meth1.png",
-      "price": 400,
+      "name": "purple trouble",
+      "image": "meth3upscale.png",
+      "price": 399,
       "id": 2
+    },
+    {
+      "name": "green scream",
+      "image": "meth4upscale.png",
+      "price": 599,
+      "id": 3
+    },
+    {
+      "name": "crystal blue",
+      "image": "meth5upscale.png",
+      "price": 999,
+      "id": 4
     }
   ]
 }
