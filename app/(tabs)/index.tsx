@@ -10,22 +10,27 @@ import {
   Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { updateMethCount, getMethCount } from "./sharedValues";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 
 export default function HomeScreen() {
-  const { width, height } = Dimensions.get("window");
   const [meth, setMeth] = useState();
-  const [show, setShow] = useState(Boolean);
+  const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
+  const [methCount, setMethCount] = useState(getMethCount());
 
   const Add = () => {
-    setShow(true)
-  };
-  const NoAdd = () => {
-    setShow(false)
+    if (hoveredItemId !== null) {
+      const updatedList = methCount.map(
+        (item, index) => (index === hoveredItemId - 1 ? item + 1 : item)
+      );
+
+      setMethCount(updatedList);
+      updateMethCount(updatedList);
+    }
   };
 
   useEffect(() => {
-    const data = require('@/assets/data/products.json'); 
+    const data = require("@/assets/data/products.json");
     setMeth(data.product);
   }, []);
 
@@ -40,8 +45,6 @@ export default function HomeScreen() {
     meth4upscale: require("@/assets/images/meth4upscale.png"),
     meth5upscale: require("@/assets/images/meth5upscale.png"),
   };
-  
-
 
   return (
     <ParallaxScrollView
@@ -63,14 +66,29 @@ export default function HomeScreen() {
           numColumns={2}
           data={meth}
           renderItem={({ item }) => (
-            <Pressable onHoverIn={() => Add()} onHoverOut={() => NoAdd()} style={styles.boxes}>
+            <Pressable
+              onHoverIn={() => setHoveredItemId(item.id)}
+              onHoverOut={() => setHoveredItemId(null)}
+              style={styles.boxes}
+            >
               <ImageBackground
                 style={styles.backgroudImages}
-                source={imageMap[item.image.split('.')[0]]}
+                source={imageMap[item.image.split(".")[0]]}
               >
                 <Text style={styles.mediumText}>{`${item.name}`}</Text>
                 <Text style={styles.mediumText}>{`${item.price}kč/g`}</Text>
-                if(show = true)
+                {hoveredItemId === item.id && (
+                  <Pressable
+                    onHoverIn={() => setHoveredItemId(item.id)}
+                    onContextMenu={(e) => e.preventDefault()}
+                    delayLongPress={200}
+                    
+                    onPress={() => Add()}
+                    style={styles.cartbutton}
+                  >
+                    <Text style={styles.mediumText} selectable={false}>Add</Text>
+                  </Pressable>
+                )}
               </ImageBackground>
             </Pressable>
           )}
@@ -86,14 +104,18 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   boxes: {
-    width: 300,
+    width: Dimensions.get("window").width / 2 - 20,
     height: 300,
     backgroundColor: "grey",
     borderStyle: "solid",
     borderWidth: 1,
     borderColor: "black",
-    justifyContent: "center",
-    margin: 200,
+    margin: 10,
+  },
+  cartbutton: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 5,
   },
   mediumText: {
     fontSize: 20,
