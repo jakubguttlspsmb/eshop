@@ -16,7 +16,8 @@ import React, { useState, useEffect } from "react";
 export default function TabTwoScreen() {
   const [methCount, setMethCount] = useState(getMethCount());
   const [meth, setMeth] = useState([]);
-  const [hoveredItemId, setHoveredItemId] = useState(null); 
+  const [hoveredItemId, setHoveredItemId] = useState(null);
+
 
   useFocusEffect(() => {
     setMethCount(getMethCount());
@@ -25,13 +26,14 @@ export default function TabTwoScreen() {
   const Remove = (itemId) => {
     if (itemId !== null) {
       const updatedList = methCount.map((item, index) =>
-        index === itemId - 1 ? item - 1 : item
+        index === itemId - 1 ? Math.max(item - 1, 0) : item 
       );
 
       setMethCount(updatedList);
       updateMethCount(updatedList);
     }
   };
+
 
   useEffect(() => {
     const data = require("@/assets/data/products.json");
@@ -61,8 +63,8 @@ export default function TabTwoScreen() {
                 <View style={styles.boab}>
                   <Text style={styles.mediumText}>{item.name}</Text>
                   <Pressable
-                    onPress={() => Remove(item.id)} 
-                    onPressIn={() => setHoveredItemId(item.id)} 
+                    onPress={() => Remove(item.id)}
+                    onPressIn={() => setHoveredItemId(item.id)}
                     onPressOut={() => setHoveredItemId(null)}
                   >
                     <Entypo name="squared-cross" size={24} color="black" />

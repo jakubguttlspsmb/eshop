@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { updateMethCount, getMethCount } from "./sharedValues";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 
@@ -17,6 +18,10 @@ export default function HomeScreen() {
   const [meth, setMeth] = useState();
   const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
   const [methCount, setMethCount] = useState(getMethCount());
+
+    useFocusEffect(() => {
+      setMethCount(getMethCount());
+    });
 
   const Add = () => {
     if (hoveredItemId !== null) {
